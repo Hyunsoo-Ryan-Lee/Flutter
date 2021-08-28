@@ -23,7 +23,81 @@ class Grade extends StatelessWidget {
         backgroundColor: Colors.amber[700],
         centerTitle: true,
         elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              print('shopping!');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              print('lets search!');
+            },
+          ),
+        ],
       ),
+      drawer: Drawer(
+          child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: AssetImage('assets/mom.jpg'),
+            ),
+            otherAccountsPictures: [
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/chan.jpg'),
+                backgroundColor: Colors.red[300],
+              )
+            ],
+            accountName: Text('Hyunsoo'),
+            accountEmail: Text('hyunsoo@gmail.com'),
+            onDetailsPressed: () {
+              print("arrow");
+            },
+            decoration: BoxDecoration(
+                color: Colors.red[300],
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40.0),
+                    bottomRight: Radius.circular(40.0))),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: Colors.grey[850],
+            ),
+            title: Text('HOME'),
+            onTap: () {
+              print('Home is clicked');
+            },
+            trailing: Icon(Icons.add),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.settings,
+              color: Colors.grey[850],
+            ),
+            title: Text('SETTINGS'),
+            onTap: () {
+              print('Setting is clicked');
+            },
+            trailing: Icon(Icons.add),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.question_answer,
+              color: Colors.grey[850],
+            ),
+            title: Text('Q&A'),
+            onTap: () {
+              print('Q&A is clicked');
+            },
+            trailing: Icon(Icons.add),
+          )
+        ],
+      )),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 40, 0, 0),
         child: Column(
@@ -31,7 +105,7 @@ class Grade extends StatelessWidget {
           children: <Widget>[
             Center(
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/horse.gif'),
+                backgroundImage: AssetImage('assets/chan.jpg'),
                 radius: 70.0,
               ),
             ),
