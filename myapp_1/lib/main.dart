@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
 class Grade extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context2) {
     return Scaffold(
       backgroundColor: Colors.amber[800],
       appBar: AppBar(
