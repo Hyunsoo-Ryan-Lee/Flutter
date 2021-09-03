@@ -26,8 +26,19 @@ class _BmiCalculatorState extends State<BmiCalculator> {
   String result = '';
   double height = 0;
   double weight = 0;
+  int age = 0;
+  final _valuelist = [
+    '주로 좌식 생활',
+    '주 1~3일 운동',
+    '주 3~5일 운동',
+    '거의 매일 운동',
+    '매일 강도높게 운동'
+  ];
+  String dropdownValue = '주로 좌식 생활';
+  String holder = '';
   TextEditingController heightcontroller = TextEditingController();
   TextEditingController weightcontroller = TextEditingController();
+  TextEditingController agecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +78,32 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   height: 20.0,
                 ),
                 Text(
-                  'Your Height in cm :',
+                  '나이를 입력하세요 :',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: agecontroller,
+                  textAlign: TextAlign.center, // 내부 문자 center 정렬
+                  decoration: InputDecoration(
+                      hintText: '나이를 입력하세요', // 입력칸에 연하게 보이는 문자
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none,
+                      )),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  '신장을 입력하세요(cm) :',
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -80,7 +116,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   controller: heightcontroller,
                   textAlign: TextAlign.center, // 내부 문자 center 정렬
                   decoration: InputDecoration(
-                      hintText: 'Your Height in cm', // 입력칸에 연하게 보이는 문자
+                      hintText: '신장을 입력하세요(cm)', // 입력칸에 연하게 보이는 문자
                       filled: true,
                       fillColor: Colors.grey[200],
                       border: OutlineInputBorder(
@@ -92,7 +128,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   height: 20.0,
                 ),
                 Text(
-                  'Your Weight in Kg :',
+                  '체중을 입력하세요(Kg) :',
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -105,7 +141,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   controller: weightcontroller,
                   textAlign: TextAlign.center, // 내부 문자 center 정렬
                   decoration: InputDecoration(
-                      hintText: 'Your Weight in Kg', // 입력칸에 연하게 보이는 문자
+                      hintText: '체중을 입력하세요(Kg)', // 입력칸에 연하게 보이는 문자
                       filled: true,
                       fillColor: Colors.grey[200],
                       border: OutlineInputBorder(
@@ -116,6 +152,49 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                 SizedBox(
                   height: 20.0,
                 ),
+                Text(
+                  '활동 정도를 선택하세요',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Center(
+                  child: DropdownButton(
+                    value: dropdownValue,
+                    onChanged: (String? newValue) {
+                      getDropDownItem();
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: _valuelist
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    elevation: 4,
+                    icon: const Icon(Icons.arrow_drop_down_rounded),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    '$holder',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 Container(
                     width: double.infinity,
                     height: 50.0,
@@ -124,8 +203,9 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                         setState(() {
                           height = double.parse(heightcontroller.value.text);
                           weight = double.parse(weightcontroller.value.text);
+                          age = int.parse(agecontroller.value.text);
                         });
-                        calculateBmi(height, weight);
+                        calculateBmi(age, height, weight);
                       },
                       style: TextButton.styleFrom(primary: Colors.blue[200]),
                       child: Text(
@@ -175,8 +255,8 @@ class _BmiCalculatorState extends State<BmiCalculator> {
   //   return bmi;
   // }
 
-  void calculateBmi(double height, double weight) {
-    double finalresult = weight / (height * height / 10000);
+  void calculateBmi(int age, double height, double weight) {
+    double finalresult = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
     String bmi = finalresult.toStringAsFixed(2);
     setState(() {
       result = bmi;
@@ -186,6 +266,12 @@ class _BmiCalculatorState extends State<BmiCalculator> {
   void change(int index) {
     setState(() {
       currentindex = index;
+    });
+  }
+
+  void getDropDownItem() {
+    setState(() {
+      holder = dropdownValue;
     });
   }
 
