@@ -190,10 +190,13 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                     '$holder',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 10.0,
+                      fontSize: 15.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 20.0,
                 ),
                 Container(
                     width: double.infinity,
