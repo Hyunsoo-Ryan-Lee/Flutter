@@ -1,4 +1,10 @@
+import 'package:final_project/login/join_login.dart';
+import 'package:final_project/login/login_background.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+
+// import 'create_account.dart';
 
 class Authpage extends StatelessWidget {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -13,34 +19,38 @@ class Authpage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            color: Colors.white,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              _logoImage(),
-              Stack(
-                children: [
-                  _inputForm(size),
-                  _authButton(size),
-                ],
-              ),
-              Container(
-                height: size.height * 0.1,
-              ),
-              Text("Don't have an account? Create One!"),
-              Container(
-                height: size.height * 0.05,
-              )
-            ],
-          ),
-        ],
-      ),
+      body: Stack(alignment: Alignment.center, children: [
+        CustomPaint(
+          size: size,
+          painter:
+              LoginBackground(isJoin: Provider.of<JoinOrLogin>(context).isJoin),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _logoImage(),
+            Stack(
+              children: [
+                _inputForm(size),
+                _authButton(size),
+              ],
+            ),
+            Container(
+              height: size.height * 0.1,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => createAccount()));
+                },
+                child: Text("Don't have an account? Create One!")),
+            Container(
+              height: size.height * 0.05,
+            ),
+          ],
+        ),
+      ]),
     );
   }
 

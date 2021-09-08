@@ -25,6 +25,7 @@ class First extends StatelessWidget {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           OutlinedButton(
             child: Text('Go to the Second Page'),
